@@ -50,7 +50,7 @@ make build
 
 Class   |    Images   |   Labels   |   P     |   R     |   mAP@.5   |   mAP@.5:.95 
 |-------|-------|-------|-------|-------|-------|-------|
-all     |    5000     |  36335     |   0.666 |   0.498 |   0.549    |   0.353
+all     |    5000     |  36335     |   66.6 |   49.8 |   54.9    |   35.3
 
 `Speed:` `1.3/52.4/53.7` ms inference/NMS/total per `640x640` image at `batch-size 2`
 
