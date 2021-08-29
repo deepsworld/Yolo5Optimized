@@ -88,5 +88,9 @@ sudo systemctl set-default multi-user
 sudo reboot now
 ```
 
+## References
+- https://github.com/necla-ml/ML-Vision
+- https://github.com/necla-ml/ML
+
 ## Contributing
 - Please raise an issue if you find any bugs or problems in running the code. 
