@@ -19,12 +19,12 @@ cd Yolo5Optimized
 
 ### Pull and run pre-built docker image
 
-- `DETECT`: run sample detection on images in a directory. The output rendered images will be stored in outputs dir. It will take ~5 mins to build fp16 engine on Jetson Nano
+- `DETECT`: run sample detection on images in a directory. The output rendered images will be stored in outputs dir.
 ```sh
 make run
 cd yolo5
 # run inference on images in assets 
-python detect.py --fp16 --inputs assets --outputs outputs
+python3 detect.py --fp16 --inputs assets --outputs outputs
 ```
 
 - `EVALUATE`: run evaluation on COCO validation set (2017)
@@ -55,6 +55,7 @@ all     |    5000     |  36335     |   0.666 |   0.498 |   0.549    |   0.353
 `Speed:` `1.3/52.4/53.7` ms inference/NMS/total per `640x640` image at `batch-size 2`
 
 ## Notes
+- It will take ~5-6 mins to build fp16 engine on Jetson Nano
 - Consider disabling GUI to free up some extra memory
 - Run in 10W power mode with `sudo nvpmodel -m 0` or `make max_power`
 - The validation script can be used to validate over some other test set with minor changes if needed.

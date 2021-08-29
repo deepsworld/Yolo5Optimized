@@ -14,14 +14,14 @@ from torchvision.io import write_jpeg, read_image
 from yolo.coco import COCO80_CLASSES
 from yolo.detector import yolo5s, yolo5l, yolo5m, yolo5x
 
-MIN_SHAPE = (320, 320)
-MAX_SHAPE = (674, 674)
+MIN_SHAPE = (192, 192)
+MAX_SHAPE = (800, 800)
 DEFAULT_WORKSPACE_SIZE = 3 << 20
 SUPPORTED_FORMATS = ['jpeg', 'jpg', 'png']
 
 COLORS = lambda x: [(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)) for _ in range(x)]
 
-def get_model(arch='yolo5s', dev=torch.device('cuda'), reload=False, pretrained=True, fp16=True, bs=2):
+def get_model(arch='yolo5s', dev=torch.device('cuda'), reload=False, pretrained=True, fp16=True, int8=False, strict=False, bs=2):
     model = eval(arch)(pretrained=pretrained, force_reload=reload).to(dev)
     # dynamic/static input
     minH, minW = MIN_SHAPE
@@ -36,8 +36,10 @@ def get_model(arch='yolo5s', dev=torch.device('cuda'), reload=False, pretrained=
     if maxW != minW:
         spec[0][2] = -1
         dynamic_axes['input_0'][3] = 'width'
+    
+    name = f"{arch}-bs{bs}_{spec[0][-2]}x{spec[0][-1]}{fp16 and '_fp16' or ''}{int8 and '_int8' or ''}{strict and '_strict' or ''}"
     model.deploy(
-        name=arch, 
+        name=name, 
         batch_size=bs, 
         dynamic_axes=dynamic_axes,
         min_shapes=min_shapes,
@@ -82,7 +84,7 @@ def parse_args():
     NOTE: Make sure to enable fp16 if the memory on the device is limited 
           (especially Jetson Nanos) or increase the DEFAULT_WORKSPACE_SIZE
     Run:
-        python detect.py --fp16 --inputs assets --outputs outputs 
+        python3 detect.py --fp16 --inputs assets --outputs outputs 
     """
     parser = argparse.ArgumentParser('Run detector on images')
     parser.add_argument('--arch', type=str, default='yolo5s', 
