@@ -14,4 +14,9 @@ RUN pip3 install -r requirement.txt --no-cache-dir \
     && pip3 install git+https://github.com/NVIDIA-AI-IOT/torch2trt.git@v0.3.0 \
     && rm *.txt
 
+# Needed for running test script 
+RUN apt-get update \
+    && apt-get install curl unzip \
+    && rm -rf /var/lib/apt/lists/*
+
 SHELL ["/bin/bash", "-c"]
