@@ -61,6 +61,7 @@ all     |    5000     |  36335     |   66.6 |   49.8 |   54.9    |   35.3
 - Consider disabling GUI to free up some extra memory
 - Run in 10W power mode with `sudo nvpmodel -m 0` or `make max_power`
 - The validation script can be used to validate over some other test set with minor changes if needed.
+- If using a Jetson Nano with 2GB memory, set `DEFAULT_WORKSPACE_SIZE = 2 << 20 or 1 << 20`. 
 
 ## Common Issues and Resolutions
 - Docker build fails with `make build`: This could happen if the default docker runtime is not set to `nvidia`. To fix this do as follow:
